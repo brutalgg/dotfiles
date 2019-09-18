@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt update
-RUN apt install -y sudo nano rsync zsh git && apt autoclean && apt autoremove
+RUN apt install -y sudo nano rsync zsh git tree dnsutils net-tools && apt autoclean && apt autoremove
 
 # Create test user and add to sudoers
 RUN useradd -m -s /bin/bash tester
