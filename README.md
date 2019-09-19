@@ -10,7 +10,7 @@ This dotfile repository will contain configuration for the following tools:
 ## Build Status
 Dotfiles and the installation process detailed in the this repository are tested with a docker container and an automated build. The status of the build is shown below:
 
-[TODO: ADD Travis CI Build Status]
+[![Build Status](https://travis-ci.org/brutalgg/dotfiles.svg?branch=master)](https://travis-ci.org/brutalgg/dotfiles)
 
 # Installation
 **Warning:** Use these dotfiles at your own risk.
