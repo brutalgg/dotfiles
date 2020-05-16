@@ -23,3 +23,8 @@
   added = yellow
   changed = green
   untracked = cyan
+
+[includeIf "gitdir:~/code/"]
+  path = .gitconfig-github
+[includeIf "gitdir:~/code/work/"]
+  path = .gitconfig-work
