@@ -6,6 +6,7 @@ This dotfile repository will contain configuration for the following tools:
 - [ ] tmux
 - [x] git
 - [ ] vim
+- [x] gnupg
 
 ## Build Status
 Dotfiles and the installation process detailed in the this repository are tested with a docker container and an automated build. The status of the build is shown below:
