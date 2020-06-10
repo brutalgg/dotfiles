@@ -1,7 +1,7 @@
-FROM ubuntu:18.04
+FROM debian:10
 
 RUN apt update
-RUN apt install -y sudo nano rsync zsh git tree dnsutils net-tools && apt autoclean && apt autoremove
+RUN apt install -y sudo nano rsync zsh git tree dnsutils net-tools gnupg && apt autoclean && apt autoremove
 
 # Create test user and add to sudoers
 RUN useradd -m -s /bin/bash tester
@@ -18,6 +18,9 @@ ENV HOME /home/tester
 
 # Change working directory
 WORKDIR /home/tester/dotfiles
+
+# Init GPG key for testing
+RUN gpg --batch --generate-key keygen
 
 # Run setup
 RUN ./bootstrap.sh -f
