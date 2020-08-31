@@ -1,5 +1,8 @@
 FROM debian:10
 
+# fix for utf-8 encoding missing in containers
+ENV PURE_PROMPT_SYMBOL='>'
+
 RUN apt update
 RUN apt install -y sudo nano rsync zsh git tree dnsutils net-tools gnupg && apt autoclean && apt autoremove
 
