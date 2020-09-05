@@ -7,6 +7,7 @@ This dotfile repository will contain configuration for the following tools:
 - [x] git
 - [ ] vim
 - [x] gnupg
+- [x] screen
 
 ## Build Status
 Dotfiles and the installation process detailed in the this repository are tested with a docker container and an automated build. The status of the build is shown below:
@@ -14,7 +15,8 @@ Dotfiles and the installation process detailed in the this repository are tested
 [![Build Status](https://travis-ci.org/brutalgg/dotfiles.svg?branch=master)](https://travis-ci.org/brutalgg/dotfiles)
 
 # Installation
-**Warning:** Use these dotfiles at your own risk.
+**Warning:** Use these dotfiles at your own risk. These will overwrite some 
+operating system default settings.
 
 ## Git and bootstrap
 
