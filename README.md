@@ -3,7 +3,7 @@ This dotfile repository will contain configuration for the following tools:
 
 - [x] Bash
 - [x] ZSH
-- [ ] tmux
+- [x] tmux
 - [x] git
 - [ ] vim
 - [x] gnupg
