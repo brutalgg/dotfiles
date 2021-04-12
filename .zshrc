@@ -11,5 +11,9 @@ SAVEHIST=2000
 setopt HIST_NO_STORE
 setopt SHARE_HISTORY
 
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
 source ~/.aliases
 
