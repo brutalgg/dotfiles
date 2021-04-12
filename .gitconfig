@@ -24,6 +24,11 @@
   changed = green
   untracked = cyan
 
+[user]
+  signingkey = 0x22ECF0F1E8AC67B7
+[gpg]
+  program = gpg
+
 [includeIf "gitdir:~/"]
   path = .gitconfig-github
 [includeIf "gitdir:~/code/work/"]
