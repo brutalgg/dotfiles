@@ -24,7 +24,8 @@
   untracked = cyan
 [gpg]
   program = gpg
-[includeIf "gitdir:~/"]
-  path = .gitconfig-github
-[includeIf "gitdir:~/code/work/"]
-  path = .gitconfig-work
+
+[includeIf "gitdir:~/Code/"]
+  path = .gitconfig-user
+# [includeIf "gitdir:~/Code/work/"]
+#   path = .gitconfig-work

@@ -1,3 +1,4 @@
 [user]
-  name = <INSERT NAME>
-  email = <INSERT EMAIL>
+  signingkey = {KEYID}
+  name = {USERNAME}
+  email = {EMAIL}
