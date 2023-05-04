@@ -10,9 +10,6 @@ function doIt() {
 		--exclude ".osx" \
 		--exclude "bootstrap.sh" \
 		--exclude "README.md" \
-		--exclude ".travis.yml" \
-		--exclude "Dockerfile" \
-		--exclude "keygen" \
 		-avh --no-perms . ~;
 	source ~/.bash_profile;
 	git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
