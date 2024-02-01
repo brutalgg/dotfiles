@@ -15,5 +15,6 @@ export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
-source ~/.aliases
+export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 
+source ~/.aliases
