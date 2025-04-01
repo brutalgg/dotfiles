@@ -54,8 +54,8 @@ alias path='echo -e ${PATH//:/\\n}'
 
 # Easy encryption and decryption with sops and age
 # for mac
-alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
-alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
+# alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
+# alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
 # for linux
 # alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")"
 # alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")"

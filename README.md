@@ -9,11 +9,6 @@ This dotfile repository will contain configuration for the following tools:
 - [x] gnupg
 - [x] screen
 
-## Build Status
-Dotfiles and the installation process detailed in the this repository are tested with a docker container and an automated build. The status of the build is shown below:
-
-[![Build Status](https://travis-ci.org/brutalgg/dotfiles.svg?branch=master)](https://travis-ci.org/brutalgg/dotfiles)
-
 # Installation
 **Warning:** Use these dotfiles at your own risk. These will overwrite some 
 operating system default settings.
@@ -23,7 +18,8 @@ operating system default settings.
 You can clone the repository wherever you want. (I like to keep it in ~/Projects/dotfiles, with ~/dotfiles as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
 
 ```bash
-git clone https://github.com/brutalgg/dotfiles.git && cd dotfiles && source bootstrap.sh
+git clone https://github.com/brutalgg/dotfiles.git && cd dotfiles
+./bootstrap.sh
 ```
 
 ## Specify the $PATH
