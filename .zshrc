@@ -25,3 +25,6 @@ source ~/.aliases
 
 # Machine-specific settings that should never be tracked in the repo
 [ -r ~/.extra ] && source ~/.extra
+
+# Show system info when opening a terminal
+command -v fastfetch > /dev/null 2>&1 && fastfetch
