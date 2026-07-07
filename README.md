@@ -27,19 +27,31 @@ git clone https://github.com/brutalgg/dotfiles.git && cd dotfiles
 ./bootstrap.sh
 ```
 
-Pass `-f`/`--force` to skip the confirmation prompt.
+Pass `-f`/`--force` to skip the confirmation prompt, or `-n`/`--dry-run` to
+preview which files would be overwritten without changing anything.
 
-## Specify the $PATH
-If `~/.path` exists, it will be sourced before all other files (by both bash
-and zsh), so machine-specific PATH entries stay out of the repo.
+# Machine-specific customization
+`bootstrap.sh` **copies** files into `$HOME`, so local edits to tracked files
+are overwritten on the next run. Anything machine-specific belongs in one of
+these untracked files instead:
 
-Here's an example `~/.path` file that adds `/usr/local/bin` to the `$PATH`:
+## `~/.path` — PATH entries
+Sourced *first* by both bash and zsh, before any feature detection. Example:
 
 ```bash
 export PATH="/usr/local/bin:$PATH"
 ```
 
-## Machine-specific git identity
+## `~/.extra` — everything else
+Sourced *last* by both bash and zsh. Use it for aliases, exports, and
+settings you don't want to commit (work tooling, secrets, one-off hosts):
+
+```bash
+export SOPS_AGE_KEY_FILE="$HOME/.sops/key.txt"
+alias vpn="sudo wg-quick up wg0"
+```
+
+## Git identity
 `.gitconfig` includes `~/.gitconfig-user` for repos under `~/code/`.
 `.gitconfig-work` is a template — fill in the placeholders and enable the
 commented `includeIf` block in `.gitconfig` on work machines.

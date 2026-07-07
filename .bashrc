@@ -22,3 +22,6 @@ _load_settings() {
 _load_settings ~/.bash/config
 
 [ -r ~/.aliases ] && source ~/.aliases
+
+# Machine-specific settings that should never be tracked in the repo
+[ -r ~/.extra ] && source ~/.extra

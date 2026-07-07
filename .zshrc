@@ -22,3 +22,6 @@ fi
 # export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 
 source ~/.aliases
+
+# Machine-specific settings that should never be tracked in the repo
+[ -r ~/.extra ] && source ~/.extra

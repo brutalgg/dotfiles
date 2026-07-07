@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
+#
+# Aliases, grouped by function. Machine-specific aliases belong in ~/.extra,
+# which is sourced last and never tracked in this repo.
 
-# Easier navigation
+# ---------------------------------------------------------------------------
+# Navigation
+# ---------------------------------------------------------------------------
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
 
-
+# ---------------------------------------------------------------------------
+# Listing (ls)
+# ---------------------------------------------------------------------------
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -29,33 +36,45 @@ alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
 
-# Always enable colored `grep` output
+# ---------------------------------------------------------------------------
+# Search (grep)
+# ---------------------------------------------------------------------------
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# Enable aliases to be sudo’ed
-# alias sudo='sudo ' #  Do i actually need this?
-
-# IP addresses
+# ---------------------------------------------------------------------------
+# Network
+# ---------------------------------------------------------------------------
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
-# Show active network interfaces
+# Show active network interfaces (requires pcregrep)
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
-# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
-# alias stfu="osascript -e 'set volume output muted true'"
-# alias pumpitup="osascript -e 'set volume output volume 100'"
-
-# Print each PATH entry on a separate line
-alias path='echo -e ${PATH//:/\\n}'
-
-# Easy encryption and decryption with sops and age
+# ---------------------------------------------------------------------------
+# Encryption (sops + age)
+# ---------------------------------------------------------------------------
+# Requires SOPS_AGE_KEY_FILE to be set (see ~/.extra / .zshrc)
 # for mac
 # alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
 # alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
 # for linux
 # alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")"
 # alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")"
+
+# ---------------------------------------------------------------------------
+# macOS only
+# ---------------------------------------------------------------------------
+if [ "$(uname)" = "Darwin" ]; then
+	# Stuff I never really use but cannot delete either because of http://xkcd.com/530/
+	alias stfu="osascript -e 'set volume output muted true'"
+	alias pumpitup="osascript -e 'set volume output volume 100'"
+fi
+
+# ---------------------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------------------
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
