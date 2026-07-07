@@ -1,32 +1,45 @@
 # Overview
-This dotfile repository will contain configuration for the following tools:
+This dotfile repository contains configuration for the following tools:
 
-- [x] Bash
-- [x] ZSH
-- [x] tmux
-- [x] git
-- [ ] vim
-- [x] gnupg
-- [x] screen
+- Bash
+- ZSH (with the [pure](https://github.com/sindresorhus/pure) prompt)
+- tmux
+- git
+- gnupg
+- screen
+
+The canonical copy lives on a self-hosted Gitea instance; every push to `main`
+is mirrored to [GitHub](https://github.com/brutalgg/dotfiles) by the workflow
+in `.gitea/workflows/mirror.yaml`.
 
 # Installation
-**Warning:** Use these dotfiles at your own risk. These will overwrite some 
+**Warning:** Use these dotfiles at your own risk. These will overwrite some
 operating system default settings.
 
 ## Git and bootstrap
 
-You can clone the repository wherever you want. (I like to keep it in ~/Projects/dotfiles, with ~/dotfiles as a symlink.) The bootstrapper script will pull in the latest version and copy the files to your home folder.
+You can clone the repository wherever you want. The bootstrapper script will
+pull in the latest version, copy the files to your home folder, and install
+(or update) the pure zsh prompt.
 
 ```bash
 git clone https://github.com/brutalgg/dotfiles.git && cd dotfiles
 ./bootstrap.sh
 ```
 
-## Specify the $PATH
-If ~/.path exists, it will be sourced along with the other files, before any feature testing (such as detecting which version of ls is being used) takes place.
+Pass `-f`/`--force` to skip the confirmation prompt.
 
-Here’s an example ~/.path file that adds /usr/local/bin to the $PATH:
+## Specify the $PATH
+If `~/.path` exists, it will be sourced before all other files (by both bash
+and zsh), so machine-specific PATH entries stay out of the repo.
+
+Here's an example `~/.path` file that adds `/usr/local/bin` to the `$PATH`:
 
 ```bash
 export PATH="/usr/local/bin:$PATH"
 ```
+
+## Machine-specific git identity
+`.gitconfig` includes `~/.gitconfig-user` for repos under `~/code/`.
+`.gitconfig-work` is a template — fill in the placeholders and enable the
+commented `includeIf` block in `.gitconfig` on work machines.

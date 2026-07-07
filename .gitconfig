@@ -25,7 +25,7 @@
 [gpg]
   program = gpg
 
-[includeIf "gitdir:~/Code/"]
+[includeIf "gitdir/i:~/code/"]
   path = .gitconfig-user
-# [includeIf "gitdir:~/Code/work/"]
+# [includeIf "gitdir/i:~/code/work/"]
 #   path = .gitconfig-work
