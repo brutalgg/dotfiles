@@ -8,9 +8,9 @@ This dotfile repository contains configuration for the following tools:
 - gnupg
 - screen
 
-The canonical copy lives on a self-hosted Gitea instance; every push to `main`
-is mirrored to [GitHub](https://github.com/brutalgg/dotfiles) by the workflow
-in `.gitea/workflows/mirror.yaml`.
+The canonical copy lives on a self-hosted Gitea instance; a Gitea push mirror
+(repo Settings → Repository → Mirror Settings) syncs every push to
+[GitHub](https://github.com/brutalgg/dotfiles).
 
 # Installation
 **Warning:** Use these dotfiles at your own risk. These will overwrite some
