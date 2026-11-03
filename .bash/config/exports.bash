@@ -19,8 +19,11 @@ export HISTFILESIZE="${HISTSIZE}";
 # Omit duplicates and commands that begin with a space from history.
 export HISTCONTROL='ignoreboth';
 
-# Prefer US English and use UTF-8.
-export LANG='en_US.UTF-8';
+# Prefer US English and use UTF-8, if that locale is installed (minimal Linux
+# images often lack it, and setting it anyway makes every tool warn).
+if locale -a 2> /dev/null | grep -qiE '^en_US\.utf-?8$'; then
+	export LANG='en_US.UTF-8';
+fi
 
 # Highlight section titles in manual pages.
 export LESS_TERMCAP_md="${yellow}";

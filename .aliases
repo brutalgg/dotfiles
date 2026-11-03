@@ -41,17 +41,24 @@ alias ls="command ls ${colorflag}"
 # ---------------------------------------------------------------------------
 # Note: `GREP_OPTIONS="--color=auto"` is deprecated, hence the alias usage.
 alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+# GNU grep 3.8+ warns that fgrep/egrep are obsolescent; `-F`/`-E` work everywhere
+alias fgrep='grep -F --color=auto'
+alias egrep='grep -E --color=auto'
 
 # ---------------------------------------------------------------------------
 # Network
 # ---------------------------------------------------------------------------
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
-# Show active network interfaces (requires pcregrep)
-alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+# All local IP addresses (ifconfig is deprecated/absent on most Linux distros)
+if [ "$(uname)" = "Darwin" ]; then
+	alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+	# Show active network interfaces (requires pcregrep)
+	alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+else
+	alias ips="ip -o addr show | awk '{ split(\$4, a, \"/\"); print a[1] }'"
+	alias ifactive="ip -br link show up"
+fi
 
 # ---------------------------------------------------------------------------
 # Encryption (sops + age)

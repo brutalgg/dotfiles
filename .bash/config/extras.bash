@@ -15,11 +15,13 @@ for option in autocd globstar; do
 done;
 
 # Add tab completion for many Bash commands
-#if which brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
-#	# Ensure existing Homebrew v1 completions continue to work
-#	export BASH_COMPLETION_COMPAT_DIR="$(brew --prefix)/etc/bash_completion.d";
-#	source "$(brew --prefix)/etc/profile.d/bash_completion.sh";
-if [ -f /etc/bash_completion ]; then
+# bash-completion 2 needs bash 4+, which macOS only has via Homebrew
+if [ -n "$HOMEBREW_PREFIX" ] && [ "${BASH_VERSINFO[0]}" -ge 4 ] \
+	&& [ -r "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh" ]; then
+	source "$HOMEBREW_PREFIX/etc/profile.d/bash_completion.sh";
+elif [ -r /usr/share/bash-completion/bash_completion ]; then
+	source /usr/share/bash-completion/bash_completion;
+elif [ -f /etc/bash_completion ]; then
 	source /etc/bash_completion;
 fi;
 
@@ -33,4 +35,6 @@ fi;
 
 # Add tab completion for `defaults read|write NSGlobalDomain`
 # You could just use `-g` instead, but I like being explicit
-complete -W "NSGlobalDomain" defaults;
+if [ "$(uname)" = "Darwin" ]; then
+	complete -W "NSGlobalDomain" defaults;
+fi;
