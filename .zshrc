@@ -1,6 +1,9 @@
 # If ~/.path exists, source it first so PATH is set before anything else
 [ -r ~/.path ] && source ~/.path
 
+# Opt-in feature flags (DOTFILES_GPG, DOTFILES_SOPS); see README
+[ -r ~/.features ] && source ~/.features
+
 fpath+=("$HOME/.zsh/pure")
 autoload -U promptinit; promptinit
 autoload -Uz compinit && compinit -i
@@ -13,13 +16,11 @@ SAVEHIST=2000
 setopt HIST_NO_STORE
 setopt SHARE_HISTORY
 
-if command -v gpgconf > /dev/null 2>&1; then
+if [ "${DOTFILES_GPG:-0}" = 1 ] && command -v gpgconf > /dev/null 2>&1; then
 	export GPG_TTY="$(tty)"
 	export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 	gpgconf --launch gpg-agent
 fi
-
-# export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 
 source ~/.aliases
 

@@ -1,6 +1,9 @@
 # If ~/.path exists, source it first so PATH is set before any feature testing
 [ -r ~/.path ] && source ~/.path
 
+# Opt-in feature flags (DOTFILES_GPG, DOTFILES_SOPS); see README
+[ -r ~/.features ] && source ~/.features
+
 if [ -d ~/.bash/functions ]; then
   for function in ~/.bash/functions/*; do
     [ -f "$function" ] && source "$function"

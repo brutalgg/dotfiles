@@ -42,6 +42,20 @@ Sourced *first* by both bash and zsh, before any feature detection. Example:
 export PATH="/usr/local/bin:$PATH"
 ```
 
+## `~/.features` — opt-in features
+The dotfiles work on both macOS and Linux. Features that not every machine
+needs are off by default; enable them in `~/.features`, which is read by
+`bootstrap.sh` and sourced right after `~/.path` by both shells:
+
+```bash
+DOTFILES_GPG=1   # sync ~/.gnupg, start gpg-agent, use it as the SSH agent
+DOTFILES_SOPS=1  # sops-enc / sops-dec helpers (key: $SOPS_AGE_KEY_FILE)
+```
+
+With `DOTFILES_GPG=1` on macOS, `bootstrap.sh` points gpg-agent at
+`pinentry-mac` if it is installed; on Linux the system default pinentry is
+used. Re-run `bootstrap.sh` after changing `DOTFILES_GPG`.
+
 ## `~/.extra` — everything else
 Sourced *last* by both bash and zsh. Use it for aliases, exports, and
 settings you don't want to commit (work tooling, secrets, one-off hosts):

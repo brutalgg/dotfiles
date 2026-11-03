@@ -56,13 +56,16 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 # ---------------------------------------------------------------------------
 # Encryption (sops + age)
 # ---------------------------------------------------------------------------
-# Requires SOPS_AGE_KEY_FILE to be set (see ~/.extra / .zshrc)
-# for mac
-# alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
-# alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep "public key: " | sed -E 's/# public key: (.*)/\1/')"
-# for linux
-# alias sops-enc="sops --encrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")"
-# alias sops-dec="sops --decrypt --age $(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")"
+# Opt in with DOTFILES_SOPS=1 in ~/.features
+if [ "${DOTFILES_SOPS:-0}" = 1 ]; then
+	export SOPS_AGE_KEY_FILE="${SOPS_AGE_KEY_FILE:-$HOME/.sops/key.txt}"
+	sops-enc() {
+		sops --encrypt --age "$(sed -n 's/^# public key: //p' "$SOPS_AGE_KEY_FILE")" "$@"
+	}
+	sops-dec() {
+		sops --decrypt "$@"
+	}
+fi
 
 # ---------------------------------------------------------------------------
 # macOS only

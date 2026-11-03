@@ -12,38 +12,54 @@ for arg in "$@"; do
 	esac
 done
 
+[ -r ~/.features ] && source ~/.features
+
+excludes=(
+	--exclude ".git/"
+	--exclude ".gitignore"
+	--exclude ".DS_Store"
+	--exclude "bootstrap.sh"
+	--exclude "README.md"
+)
+[ "${DOTFILES_GPG:-0}" = 1 ] || excludes+=(--exclude ".gnupg/")
+
+function configureGpg() {
+	# GnuPG refuses to load configs from a directory with loose permissions
+	chmod 700 ~/.gnupg
+	chmod 600 ~/.gnupg/*.conf
+
+	if [ "$(uname)" = "Darwin" ]; then
+		for pinentry in "$(command -v pinentry-mac)" /opt/homebrew/bin/pinentry-mac /usr/local/bin/pinentry-mac; do
+			if [ -x "$pinentry" ]; then
+				echo "pinentry-program $pinentry" >> ~/.gnupg/gpg-agent.conf
+				break
+			fi
+		done
+	fi
+}
+
 function doIt() {
 	if [ -d .git ]; then
 		git pull origin main
 	fi
 
-	rsync --exclude ".git/" \
-		--exclude ".gitignore" \
-		--exclude ".DS_Store" \
-		--exclude "bootstrap.sh" \
-		--exclude "README.md" \
-		-avh --no-perms . ~
+	rsync "${excludes[@]}" -avh --no-perms . ~
 
-	# GnuPG refuses to load configs from a directory with loose permissions
-	chmod 700 ~/.gnupg
-	chmod 600 ~/.gnupg/*.conf
+	[ "${DOTFILES_GPG:-0}" = 1 ] && configureGpg
 
 	# Install or update the pure zsh prompt
-	if [ -d "$HOME/.zsh/pure/.git" ]; then
-		git -C "$HOME/.zsh/pure" pull --quiet
-	else
-		git clone --quiet https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+	if command -v zsh > /dev/null 2>&1; then
+		if [ -d "$HOME/.zsh/pure/.git" ]; then
+			git -C "$HOME/.zsh/pure" pull --quiet
+		else
+			git clone --quiet https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+		fi
 	fi
 }
 
 if [ "$dryrun" -eq 1 ]; then
 	echo "Dry run: these files would be copied to $HOME"
-	rsync --exclude ".git/" \
-		--exclude ".gitignore" \
-		--exclude ".DS_Store" \
-		--exclude "bootstrap.sh" \
-		--exclude "README.md" \
-		-avhn --no-perms . ~
+	rsync "${excludes[@]}" -avhn --no-perms . ~
 	exit 0
 fi
 
